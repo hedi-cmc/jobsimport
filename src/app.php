@@ -5,22 +5,25 @@ Entry point of the project.
 To be run from the command line.
 ************************************/
 
-include_once(__DIR__.'/utils.php');
-include_once(__DIR__.'/config.php');
+require_once(__DIR__.'/utils.php');
 
+require_once 'autoloader.php';
+
+use Domain\Job\JobsImporter;
+use Domain\Job\JobsLister;
 
 printMessage("Starting...");
 
 
 /* import jobs from regionsjob.xml */
-$jobsImporter = new JobsImporter(SQL_HOST, SQL_USER, SQL_PWD, SQL_DB, RESSOURCES_DIR . 'regionsjob.xml');
+$jobsImporter = new JobsImporter();
 $count = $jobsImporter->importJobs();
 
 printMessage("> {count} jobs imported.", ['{count}' => $count]);
 
 
 /* list jobs */
-$jobsLister = new JobsLister(SQL_HOST, SQL_USER, SQL_PWD, SQL_DB);
+$jobsLister = new JobsLister();
 $jobs = $jobsLister->listJobs();
 
 printMessage("> all jobs ({count}):", ['{count}' => count($jobs)]);

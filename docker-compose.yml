@@ -8,6 +8,8 @@ services:
     volumes:
       - ./src/:/var/app/src
       - ./resources/:/var/app/resources
+    env_file:
+      - .env
     depends_on:
       - mariadb
 
